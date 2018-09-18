@@ -98,7 +98,17 @@
 
 
 
-var a = [0,1,2,77,66,55,33,22];
-var b = 22;
+// var a = [0,1,2,77,66,55,33,22];
+// var b = 22;
 
-console.log(a.indexOf(b));
+// console.log(a.indexOf(b));
+
+
+var guess = ('B25');
+var firsChar = guess.charAt(1);
+console.log(firsChar);
+
+var alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G'];
+var row = alphabet.indexOf(firsChar);
+console.log(isNaN(row));
+console.log(guess.split('').join('-'));
