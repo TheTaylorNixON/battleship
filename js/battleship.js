@@ -261,3 +261,7 @@ for(i = 0; i < model.ships.length; i++) {
 //     console.log(p[i]);
 //     view.displayHit(p[i]);
 // }
+
+
+
+//qweqweqwe
