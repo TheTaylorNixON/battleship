@@ -104,11 +104,66 @@
 // console.log(a.indexOf(b));
 
 
-var guess = ('B25');
-var firsChar = guess.charAt(1);
-console.log(firsChar);
+// var guess = ('B25');
+// var firsChar = guess.charAt(1);
+// console.log(firsChar);
 
-var alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G'];
-var row = alphabet.indexOf(firsChar);
-console.log(isNaN(row));
-console.log(guess.split('').join('-'));
+// var alphabet = ['A','B', 'C', 'D', 'E', 'F', 'G'];
+// var row = alphabet.indexOf(firsChar);
+// console.log(isNaN(row));
+// console.log(guess.split('').join('-'));
+
+
+
+"use strict";
+
+var playerModel = {
+    boardSize: 7,
+    numShips: 3,
+    ships: [{   locations: [], hits: ['', '', '']   },
+            {   locations: [], hits: ['', '', '']   },
+            {   locations: [], hits: ['', '', '']   }],
+    shipsSunk: 0,
+    shipLength: 3,
+    generateShip: function () {
+        var direction = Math.floor(Math.random() * 2);
+        var row, col;
+        var result = [];
+
+        if (direction === 1) {      //horizontal   70-71-72
+            row = Math.floor(Math.random() * this.boardSize);
+            col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+            for (var i = 0; i < this.shipLength; i++) {
+                result.push('1' + String(row) + String(col + i));
+            }
+        } else {                    //vertical
+            row = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+            col = Math.floor(Math.random() * this.boardSize);
+            for (var i = 0; i < this.shipLength; i++) {
+                result.push('1' + String(row + i) + String(col));
+            }
+        }
+        return result;
+    },
+    generateShipLocation: function () {
+        var i = 0;
+        while (i < this.numShips) {
+            this.ships[i].locations = this.generateShip();
+            i++;
+        }
+    },
+    showShips: function(location) {
+        for (var i = 0; i < this.numShips; i++) {
+            var ship = this.ships[i].locations;
+            for (var i = 0; i < this.shipLength; i++) {
+                view.displayHit(ship[i]);
+            }
+        }
+    },
+}
+
+playerModel.generateShipLocation();
+playerModel.showShips();
+// console.log(playerModel.ships[0].locations)
+// console.log(playerModel.ships[1].locations)
+// console.log(playerModel.ships[2].locations)

@@ -8,9 +8,6 @@ body {
     width: 50%;
     height: 100%;
     margin: auto;
-    /* height: 863px; */
-    /* width: 1024px; */
-    /* background: url('./board.jpg') no-repeat; */
 }
 
 .board img {
@@ -32,8 +29,6 @@ body {
 table {
     position: absolute;
     width: 66%;
-    /* left: 173px; */
-    /* top: 98px; */
     border-spacing: 0px;
     left: 17%;
     top: 11%;
@@ -57,8 +52,6 @@ td {
     width: 13.65%;
     height: 100%;
     display: inline-block;
-    /* width: 94px; */
-    /* height: 94px; */
 }
 
 td:hover {
@@ -90,6 +83,18 @@ form input {
 
 #fireButton {
     width: 30%;
+}
+
+#generateButton {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8%;
+    z-index: 99;
+    background-color: bisque;
+    border-color: rgb(83, 175, 19);
+    font-size: 1.1em;
 }
 
 .hit {

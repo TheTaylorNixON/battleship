@@ -1,4 +1,4 @@
-
+"use strict";
 
 var view = {
     displayMessage: function (msg) {
@@ -12,6 +12,10 @@ var view = {
     displayMiss: function (location) {
         var cell = document.getElementById(location);
         cell.className = 'miss';
+    },
+    displayClear: function (location) {
+        var cell = document.getElementById(location);
+        cell.className = '';
     }
 }
 
@@ -32,7 +36,7 @@ var model = {
                 view.displayHit(guess);
                 view.displayMessage('HIT !');
                 if (this.isSunk(ship)) {
-                    view.displayMessage('You sank my battleship!');
+                    view.displayMessage('You sank battleship!');
                     this.shipsSunk++;
                 }
                 return true;
@@ -73,8 +77,9 @@ var model = {
         for (var i = 0; i < this.numShips; i++) {
             do {
                 var locations = this.generateShip();
-            } while (this.collision(locations));
+            } while (this.collision(locations)) {
                 this.ships[i].locations = locations;
+            }
         }
     },
     collision: function (locations) {
@@ -158,3 +163,69 @@ function init() {
 }
 
 window.onload = init;
+
+//=================================================================================================
+
+
+var playerModel = {
+    boardSize: 7,
+    numShips: 3,
+    ships: [{   locations: [], hits: ['', '', '']   },
+            {   locations: [], hits: ['', '', '']   },
+            {   locations: [], hits: ['', '', '']   }],
+    shipsSunk: 0,
+    shipLength: 3,
+    generateShip: function () {
+        var direction = Math.floor(Math.random() * 2);
+        var row, col;
+        var result = [];
+
+        if (direction === 1) {      //horizontal   70-71-72
+            row = Math.floor(Math.random() * this.boardSize);
+            col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+            for (var i = 0; i < this.shipLength; i++) {
+                result.push('1' + String(row) + String(col + i));
+            }
+        } else {                    //vertical
+            row = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+            col = Math.floor(Math.random() * this.boardSize);
+            for (var i = 0; i < this.shipLength; i++) {
+                result.push('1' + String(row + i) + String(col));
+            }
+        }
+        return result;
+    },
+    showShips: function() {
+        for (var i = 0; i < this.numShips; i++) {
+            var ship = this.ships[i].locations;
+            for (var j = 0; j < this.shipLength; j++) {
+                view.displayHit(ship[j]);
+            }
+        }
+    },
+    generateShipLocation: function () {
+        var i = 0;
+        while (i < this.numShips) {
+            this.ships[i].locations = this.generateShip();
+            i++;
+        }
+        this.showShips();
+    },
+    clearShips: function () {
+        for (var i = 0; i < this.numShips; i++) {
+            var ship = this.ships[i].locations;
+            for (var j = 0; j < this.shipLength; j++) {
+                view.displayClear(ship[j]);
+            }
+            this.ships[i].locations = [];
+        }
+    },
+}
+
+playerModel.generateShipLocation();
+
+var generateButton = document.getElementById('generateButton');
+generateButton.addEventListener('click', function () {
+                                            playerModel.clearShips()
+                                            playerModel.generateShipLocation();
+                                                    }, false);
